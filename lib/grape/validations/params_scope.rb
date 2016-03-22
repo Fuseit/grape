@@ -1,7 +1,7 @@
 module Grape
   module Validations
     class ParamsScope
-      attr_accessor :element, :parent, :index
+      attr_accessor :element, :parent
 
       include Grape::DSL::Parameters
 
@@ -48,7 +48,7 @@ module Grape
         case
         when nested?
           # Find our containing element's name, and append ours.
-          "#{@parent.full_name(@element)}#{parent_index}[#{name}]"
+          "#{@parent.full_name(@element)}[#{name}]"
         when lateral?
           # Find the name of the element as if it was at the
           # same nesting level as our parent.
@@ -57,10 +57,6 @@ module Grape
           # We must be the root scope, so no prefix needed.
           name.to_s
         end
-      end
-
-      def parent_index
-        "[#{@parent.index}]" if @parent.present? && @parent.index.present?
       end
 
       # @return [Boolean] whether or not this scope is the root-level scope
