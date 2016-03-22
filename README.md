@@ -1,3 +1,5 @@
+This branch is v0.15.0 without array context feature. https://github.com/ruby-grape/grape/pull/1313
+
 ![grape logo](grape.png)
 
 [![Gem Version](https://badge.fury.io/rb/grape.svg)](http://badge.fury.io/rb/grape)
