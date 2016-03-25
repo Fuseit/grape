@@ -43,10 +43,12 @@ module Grape
           mod = Module.new
 
           expect(subject).to receive(:namespace_stackable).with(:helpers, kind_of(Grape::DSL::Helpers::BaseHelper)).and_call_original
-          expect(subject).to receive(:namespace_stackable).with(:helpers).and_call_original
+          expect(subject).to receive(:namespace_stackable).with(:helpers).and_call_original.twice
           subject.helpers(mod, &proc)
 
-          expect(subject.mod).to eq mod
+          expect(subject.mod).not_to eq mod
+          expect(mod.instance_methods).not_to include :test
+          expect(subject.mod.instance_methods).to include :test
         end
 
         context 'with an external file' do

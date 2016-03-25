@@ -27,17 +27,16 @@ module Grape
         #     end
         #
         def helpers(new_mod = nil, &block)
+          mod = Module.new
           if block_given? || new_mod
-            mod = new_mod || Module.new
+            mod.send(:include, new_mod) if new_mod
             define_boolean_in_mod(mod)
-            inject_api_helpers_to_mod(mod) if new_mod
             inject_api_helpers_to_mod(mod) do
               mod.class_eval(&block)
             end if block_given?
 
             namespace_stackable(:helpers, mod)
           else
-            mod = Module.new
             namespace_stackable(:helpers).each do |mod_to_include|
               mod.send :include, mod_to_include
             end
